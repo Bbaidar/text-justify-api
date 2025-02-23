@@ -1,5 +1,4 @@
-import crypto from 'crypto';
-
+import * as crypto from 'crypto';
 interface TokenData {
     email: string;
     wordCount: number;
@@ -7,14 +6,14 @@ interface TokenData {
 }
 
 class TokenService {
-    private tokens: Map<string, TokenData>;
     private static instance: TokenService;
+    private tokens: Map<string, TokenData>;
 
     private constructor() {
         this.tokens = new Map();
     }
 
-    static getInstance(): TokenService {
+    public static getInstance(): TokenService {
         if (!TokenService.instance) {
             TokenService.instance = new TokenService();
         }
@@ -35,32 +34,21 @@ class TokenService {
         return this.tokens.has(token);
     }
 
-    incrementWordCount(token: string, count: number): boolean {
-        const tokenData = this.tokens.get(token);
-        if (!tokenData) return false;
-
-        const WORD_LIMIT = 80000;
-        if (tokenData.wordCount + count > WORD_LIMIT) {
-            return false;
-        }
-
-        tokenData.wordCount += count;
-        return true;
-    }
-
     getWordCount(token: string): number {
-        return this.tokens.get(token)?.wordCount || 0;
+        const data = this.tokens.get(token);
+        return data ? data.wordCount : 0;
     }
 
-    cleanExpiredTokens(): void {
-        const now = Date.now();
-        const dayInMs = 24 * 60 * 60 * 1000;
+    incrementWordCount(token: string, count: number): boolean {
+        const data = this.tokens.get(token);
+        if (!data) return false;
         
-        this.tokens.forEach((data, token) => {
-            if (now - data.createdAt.getTime() > dayInMs) {
-                this.tokens.delete(token);
-            }
-        });
+        const newCount = data.wordCount + count;
+        if (newCount > 80000) return false;
+
+        data.wordCount = newCount;
+        this.tokens.set(token, data);
+        return true;
     }
 }
 

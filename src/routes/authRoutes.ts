@@ -1,7 +1,6 @@
 import express, { Router, Request, Response, NextFunction, RequestHandler } from 'express';
 import { tokenService } from '../services/tokenServices';
 
-// Interface pour la requête de token
 interface TokenRequest extends Request {
     body: {
         email?: string;
@@ -10,7 +9,7 @@ interface TokenRequest extends Request {
 
 const router: Router = express.Router();
 
-// Gestionnaire de génération de token
+
 const generateTokenHandler: RequestHandler = (
     req: TokenRequest,
     res: Response,
@@ -24,7 +23,7 @@ const generateTokenHandler: RequestHandler = (
             return;
         }
 
-        // Validation basique de l'email
+      
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
             res.status(400).json({ error: "Format d'email invalide" });
@@ -39,7 +38,6 @@ const generateTokenHandler: RequestHandler = (
     }
 };
 
-// Middleware de vérification de token
 const verifyTokenHandler: RequestHandler = (
     req: Request,
     res: Response,
@@ -65,9 +63,9 @@ const verifyTokenHandler: RequestHandler = (
     }
 };
 
-// Configuration des routes
+
 router.post('/token', generateTokenHandler);
 
-// Export du middleware de vérification et des routes
+
 export { verifyTokenHandler };
 export default router;

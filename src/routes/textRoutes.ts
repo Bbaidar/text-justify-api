@@ -1,13 +1,13 @@
 import express from 'express';
 import { TextJustifier } from '../services/textJustifier';
-import { tokenService } from '../services/tokenServices'; // Changement ici
+import { tokenService } from '../services/tokenServices'; 
 
 const router = express.Router();
 const justifier = new TextJustifier();
 
 router.post('/justify', async (req, res) => {
     try {
-        // Vérifier le token
+        
         const authHeader = req.headers.authorization;
         if (!authHeader) {
             return res.status(401).json({ error: 'Token manquant' });
@@ -18,19 +18,19 @@ router.post('/justify', async (req, res) => {
             return res.status(401).json({ error: 'Token invalide' });
         }
 
-        // Récupérer le texte
+        
         const text = req.body;
         if (typeof text !== 'string') {
             return res.status(400).json({ error: 'Le texte doit être une chaîne de caractères' });
         }
 
-        // Vérifier la limite de mots
+        
         const words = text.trim().split(/\s+/).length;
         if (!tokenService.incrementWordCount(token, words)) { // Changement ici
             return res.status(402).json({ error: 'Limite de mots dépassée' });
         }
 
-        // Justifier le texte
+        
         const justifiedText = justifier.justify(text);
 
         res.type('text/plain').send(justifiedText);

@@ -1,6 +1,4 @@
-// src/services/textService.ts
 
-// src/services/textService.ts
 export const countWordsInText = (text: string): number => {
     return text.split(' ').length;
   };
@@ -21,7 +19,7 @@ export const justifyText = (text: string, lineLength: number): string => {
     if (currentLine) lines.push(currentLine);
   
     return lines.join('\n');
-    // src/services/textService.ts
+  
   
   };
   
