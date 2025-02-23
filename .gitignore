@@ -1,3 +1,7 @@
+# D‚pendances 
 node_modules/ 
 dist/ 
 coverage/ 
+.env 
+.vscode/ 
+*.log 
