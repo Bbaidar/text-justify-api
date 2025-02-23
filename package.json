@@ -1,0 +1,31 @@
+{
+  "name": "text-justify-api",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "ts-node src/server.ts",
+    "docs": "typedoc --out docs/api src/",
+    "dev": "nodemon src/server.ts",
+    "build": "tsc",
+    "test": "jest --config jest.config.js",
+    "test:watch": "jest --config jest.config.js --watch",
+    "test:coverage": "jest --config jest.config.js --coverage",
+    "test:manual": "ts-node src/test-manual.ts"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.13",
+    "@types/jest": "^27.0.3",
+    "@types/node": "^16.18.126",
+    "@types/supertest": "^6.0.2",
+    "jest": "^27.4.5",
+    "nodemon": "^2.0.15",
+    "supertest": "^7.0.0",
+    "ts-jest": "^27.1.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^4.9.5"
+  }
+}
